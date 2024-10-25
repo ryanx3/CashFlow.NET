@@ -6,7 +6,7 @@ namespace CashFlow.Api.Controllers;
 [ApiController]
 public class ExpensesController : ControllerBase
 {
-    [HttpGet]
+    [HttpPost]
     public IActionResult Register([FromBody] RequestRegisterExpenseJson request)
     {
         return Created();
