@@ -15,5 +15,12 @@ public class RegisterExpenseUseCase
     {
         var validator = new RegisterExpenseValidator();
         var response = validator.Validate(request);
+
+        if(response.IsValid == false)
+        {
+            var errorMessage = response.Errors.Select(f => f.ErrorMessage).ToList();
+            throw new ArgumentException();
+        }
+
     }
 }
