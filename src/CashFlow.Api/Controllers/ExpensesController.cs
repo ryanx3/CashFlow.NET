@@ -12,19 +12,7 @@ public class ExpensesController : ControllerBase
     [HttpPost]
     public IActionResult Register([FromBody] RequestRegisterExpenseJson request)
     {
-        try
-        {
-            var response = new RegisterExpenseUseCase().Execute(request);
-            return Created(string.Empty, response);
-        }
-        catch (ErrorOnValidationException ex)
-        {
-            var errorMessage = new ResponseErrorJson(ex.Error);
-            return BadRequest(errorMessage);
-        }
-        catch {
-            var errorMessage = new ResponseErrorJson("unknown error");
-            return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
-        }
+       var response = new RegisterExpenseUseCase().Execute(request);
+   return  Created(string.Empty, response);
     }
 }
