@@ -13,6 +13,6 @@ public class ExpensesController : ControllerBase
     public IActionResult Register([FromBody] RequestRegisterExpenseJson request)
     {
        var response = new RegisterExpenseUseCase().Execute(request);
-   return  Created(string.Empty, response);
+       return  Created(string.Empty, response);
     }
 }
