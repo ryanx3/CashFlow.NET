@@ -1,6 +1,7 @@
 ﻿using CashFlow.Application.UseCases.Expenses.Register;
-using CashFlow.Communication.Requests;
+using CashFlow.Exception;
 using CommonTestUtilities.Requests;
+using FluentAssertions;
 
 namespace Validators.Tests.Expenses.Register;
 public class RegisterExpensesValidatorTests
@@ -14,6 +15,21 @@ public class RegisterExpensesValidatorTests
 
         var response = validator.Validate(request);
 
-        Assert.True(response.IsValid);
+        response.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Error_Title_Empty()
+    {
+        var validator = new RegisterExpenseValidator();
+        var request = RequestRegisterExpenseJsonBuilder.Build();
+
+        request.Title = "";
+
+        var response = validator.Validate(request);
+
+        response.IsValid.Should().BeFalse();
+        response.Errors.Should().ContainSingle().
+            And.Contain(error => error.ErrorMessage == ResourceErrorMessages.TITLE_REQUIRED);
     }
 }
