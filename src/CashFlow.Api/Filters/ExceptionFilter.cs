@@ -10,12 +10,13 @@ public class ExceptionFilter : IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
-       if( context.Exception is CashFlowException )
+        if (context.Exception is CashFlowException)
         {
             HandleProjectException(context);
-        } else
+        }
+        else
         {
-            ThrowUnknownError(context);
+            ThrowUnkowError(context);
         }
     }
 
@@ -24,25 +25,26 @@ public class ExceptionFilter : IExceptionFilter
         if (context.Exception is ErrorOnValidationException)
         {
             var ex = (ErrorOnValidationException)context.Exception;
-            var errorMessage = new ResponseErrorJson(ex.Error);
+
+            var errorResponse = new ResponseErrorJson(ex.Errors);
 
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(errorMessage);
+            context.Result = new BadRequestObjectResult(errorResponse);
         }
         else
         {
-            var errorMessage = new ResponseErrorJson(context.Exception.Message);
+            var errorResponse = new ResponseErrorJson(context.Exception.Message);
 
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(errorMessage);
+            context.Result = new BadRequestObjectResult(errorResponse);
         }
     }
 
-    private void ThrowUnknownError(ExceptionContext context)
+    private void ThrowUnkowError(ExceptionContext context)
     {
-        var errorMessage = new ResponseErrorJson(ResourceErrorMessages.UNKNOWN_ERROR);
+        var errorResponse = new ResponseErrorJson(ResourceErrorMessages.UNKNOWN_ERROR);
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Result = new ObjectResult(errorMessage);
+        context.Result = new ObjectResult(errorResponse);
     }
 }
