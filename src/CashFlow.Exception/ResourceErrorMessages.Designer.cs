@@ -68,7 +68,15 @@ namespace CashFlow.Exception {
                 return ResourceManager.GetString("AMOUNT_MUST_BE_GREATER_THAN_ZERO", resourceCulture);
             }
         }
-        
+
+        public static string EXPENSE_NOT_FOUND
+        {
+            get
+            {
+                return ResourceManager.GetString("EXPENSE_NOT_FOUND", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to The expenses cannot be for the future..
         /// </summary>
